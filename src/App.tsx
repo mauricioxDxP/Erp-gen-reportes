@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { Button, Tab, TabPanel, Tabs, TabsList } from '@mui/base'
+import { Tab, TabPanel, Tabs, TabsList } from '@mui/base'
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import CodeEditorFunction from './components/CodeEditorFunction';
 function App() {

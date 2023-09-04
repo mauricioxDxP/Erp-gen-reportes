@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 interface codeditorfunint{
     valor:string;

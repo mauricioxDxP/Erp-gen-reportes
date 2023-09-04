@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import { Button } from '@mui/base'
+import { Button, Tab, TabPanel, Tabs, TabsList } from '@mui/base'
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import CodeEditorFunction from './components/CodeEditorFunction';
 function App() {
   const [valores,setValores]=useState({
     clase:"",
@@ -9,6 +10,7 @@ function App() {
   });
   const handleChange = (x:React.ChangeEvent<HTMLTextAreaElement|undefined>)=>
   {
+    console.log(x.target.value)
     setValores({
       ...valores,
       [x.target.name]:x.target.value,
@@ -22,17 +24,17 @@ function App() {
     })
   };
 function logicaGenerar(entrada:string){
-  var c = entrada.split("\n");
-  let nombreComponente=c.shift();
+  const c = entrada.split("\n");
+  const nombreComponente=c.shift();
   let cols:string="";
   let rows:string="   {";
   c.forEach((campo)=>{
-    let [name,title]=campo.split(",");
+    const [name,title]=campo.split(",");
     cols += `   { name: '${name}', title: '${title}' },\n`;
     rows +=` ${name}:""`;
   });
 
-  var template = `
+  const template = `
   import React, { useState } from 'react'
   import DeleteIcon from 'icons/DeleteIcon';
   import Edit from 'icons/Edit';
@@ -43,6 +45,12 @@ function logicaGenerar(entrada:string){
 ${rows}])
     const [columns, setColumns] = useState([
 ${cols}]);
+return (
+  <DataTablaStandar
+    columns={columns}
+    rows={rows}
+  />
+)
   }
     `
   return template;
@@ -57,13 +65,17 @@ ${cols}]);
           language="csharp"
           data-color-mode='dark'
         ></CodeEditor>
-
-        <CodeEditor style={{ width: '-webkit-fill-available', height: "90vh" }}
-          value={valores.generadoFrontend}
-          name='generado'
-          language="jsx"
-          data-color-mode='dark'
-        ></CodeEditor>
+        <Tabs defaultValue={1} style={{ width: '-webkit-fill-available', height: "90vh" }}>
+          <TabsList>
+            <Tab value={1}>One</Tab>
+            <Tab value={2}>Two</Tab>
+            <Tab value={3}>Three</Tab>
+          </TabsList>
+          <TabPanel value={1}><CodeEditorFunction valor={valores.generadoFrontend}/></TabPanel>
+          <TabPanel value={2}>Second page</TabPanel>
+          <TabPanel value={3}>Third page</TabPanel>
+        </Tabs>
+        
     </div>
     {/* <div style={{display:'flex'}}>
       <Button style={{margin:"auto"}} onClick={generar}>convertir</Button>
